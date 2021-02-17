@@ -41,7 +41,7 @@ tr:nth-child(odd) {background: #BBBBBB}
 	font-weight: bold;
 	width: 120px; 
 	padding: 5px 10px; 
-	
+	cursor: pointer !important;
 	margin-bottom: 15px;
 	background: #cccccc;
 }

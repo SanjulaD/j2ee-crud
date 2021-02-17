@@ -6,7 +6,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>List Student</title>
+        <title>List Student - Web Student Tracker</title>
         <link type="text/css" rel="stylesheet" href="css/style.css">
     </head>
 
@@ -22,7 +22,8 @@
 
             <!-- Add a button to add student -->
             <input type="button" value="Add Student" class="add-student-button" 
-                   onclick="window.location.href = 'add-student-form.jsp'; return false;"/>
+                   onclick="window.location.href = 'add-student-form.jsp'; return false;"
+                   />
 
             <div id="content">
                 <table>

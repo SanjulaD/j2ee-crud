@@ -35,8 +35,29 @@ public class StudentControllerServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
         try {
+            
+            // read the command parameter
+            String theCommand = request.getParameter("command");
+            if(theCommand == null) {
+                theCommand = "LIST";
+            }
+             
+            // routes
+            switch(theCommand) {
+                case "LIST" :
+                    listStudents(request, response);
+                    break;
+                case "ADD":
+                    addStudent(request, response);
+                    break;
+                default:
+                    listStudents(request, response);
+            }
+            
             listStudents(request, response);
         } catch (SQLException ex) {
+            Logger.getLogger(StudentControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
             Logger.getLogger(StudentControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -50,6 +71,22 @@ public class StudentControllerServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/list-student.jsp");
         
         dispatcher.forward(request, response);
+    }
+
+    private void addStudent(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException, Exception {
+        // read studnet info from form data
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        String email = request.getParameter("email");
+        
+        // create new student object
+        Student theStudent = new Student(firstName, lastName, email);
+        
+        // add the student to the database
+        studentDbUtil.addStudent(theStudent);
+        
+        // send back to the main page
+        listStudents(request, response);
     }
     
 }

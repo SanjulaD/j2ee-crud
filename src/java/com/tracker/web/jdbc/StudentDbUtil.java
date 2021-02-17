@@ -1,6 +1,7 @@
 package com.tracker.web.jdbc;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -66,6 +67,31 @@ public class StudentDbUtil {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    void addStudent(Student theStudent) throws Exception {
+        // create sql for insert
+        Connection con = null;
+        PreparedStatement pst = null;
+
+        try {
+            con = dataSource.getConnection();
+
+            String sql = "insert into student" + "(first_name, last_name, email)" + "values (?,?,?)";
+
+            // set the param values
+            pst = con.prepareStatement(sql);
+            pst.setString(1, theStudent.getFirstName());
+            pst.setString(2, theStudent.getLastName());
+            pst.setString(3, theStudent.getEmail());
+
+            // execute sql
+            pst.execute();
+
+        } finally {
+            // clean up JDBC
+            close(con, pst, null);
         }
     }
 }
